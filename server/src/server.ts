@@ -42,6 +42,8 @@ app.get(API_ENDPOINTS.SWAGGER_UI, getSwaggerUI);
 
 // Serve static files (for frontend)
 app.use(express.static(path.join(__dirname, '../public')));
+// Serve hosted documentation
+app.use('/docs', express.static(path.join(__dirname, '../../hosted_docs')));
 
 // Start server
 app.listen(PORT, () => {

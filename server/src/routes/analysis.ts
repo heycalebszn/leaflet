@@ -116,13 +116,25 @@ export const analyzeProject = async (req: Request, res: Response) => {
       await generator.generateTemplates(result.data!, templateDir);
     }
 
+    // Optionally host documentation on Leaflet
+    let hostedUrl = null;
+    if (req.body.hostOnLeaflet) {
+      const hostedId = path.basename(outputDir);
+      const hostedDir = path.join(__dirname, '../../hosted_docs', hostedId);
+      await fs.ensureDir(hostedDir);
+      // Copy all output files to hosted_docs/{hostedId}/
+      await fs.copy(outputDir, hostedDir);
+      hostedUrl = `/docs/${hostedId}/analysis.${outputFormat}`;
+    }
+
     res.json({
       success: true,
       data: result.data,
       processingTime: result.processingTime,
       outputPath,
       downloadUrl: `/api/download/${path.basename(outputDir)}`,
-      importedPath: finalProjectPath
+      importedPath: finalProjectPath,
+      hostedUrl
     });
 
   } catch (error) {

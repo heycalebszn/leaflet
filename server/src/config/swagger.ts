@@ -117,6 +117,11 @@ export const swaggerConfig = {
                   apiKey: {
                     type: 'string',
                     description: 'Optional API key override'
+                  },
+                  hostOnLeaflet: {
+                    type: 'boolean',
+                    description: 'If true, host the generated documentation on Leaflet and return a hosted URL',
+                    default: false
                   }
                 }
               }
@@ -148,7 +153,8 @@ export const swaggerConfig = {
                     processingTime: { type: 'number' },
                     outputPath: { type: 'string' },
                     downloadUrl: { type: 'string' },
-                    importedPath: { type: 'string' }
+                    importedPath: { type: 'string' },
+                    hostedUrl: { type: 'string', nullable: true, description: 'URL to the hosted documentation if hostOnLeaflet was true' }
                   }
                 }
               }
